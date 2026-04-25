@@ -75,12 +75,26 @@ public class PowerShellClientCodegenTest {
         // so the emitted model lives at src/<package>/Model/DollarModel.ps1.
         java.nio.file.Path dollarModelPs1 = Paths.get(outputPath + "/src/PSOpenAPITools/Model/DollarModel.ps1");
 
-        // Property names containing `$` must be single-quoted so PowerShell does
-        // not attempt variable interpolation.
-        assertFileContains(dollarModelPs1, "'$dollarValue$'");
+        // Every site where model_simple.mustache emits a user-supplied baseName
+        // must use single-quoted PowerShell strings so `$` is treated literally:
+        //
+        //   1. The `Initialize-…` hash literal: `'$dollarValue$' = ${DollarValue}`
+        //   2. The JSON round-trip hash literal in `ConvertFrom-…JsonTo…`
+        //   3. The property-allowlist array: `$AllProperties = ('$dollarValue$')`
+        //   4. The property-indexer lookup: `$JsonParameters.PSobject.Properties['$dollarValue$'].value`
+        //   5. The presence-check regex: `-match '$dollarValue$'`
+        assertFileContains(dollarModelPs1,
+                "'$dollarValue$' = ${DollarValue}",
+                "$AllProperties = ('$dollarValue$')",
+                "$JsonParameters.PSobject.Properties['$dollarValue$'].value",
+                "-match '$dollarValue$'");
 
-        // The previous double-quoted emission must no longer appear anywhere in
+        // The previous double-quoted emissions must no longer appear anywhere in
         // the generated model file.
-        assertFileNotContains(dollarModelPs1, "\"$dollarValue$\" = ");
+        assertFileNotContains(dollarModelPs1,
+                "\"$dollarValue$\" = ",
+                "$AllProperties = (\"$dollarValue$\")",
+                "$JsonParameters.PSobject.Properties[\"$dollarValue$\"]",
+                "-match \"$dollarValue$\"");
     }
 }
