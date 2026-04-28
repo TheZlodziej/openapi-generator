@@ -1,11 +1,15 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "target": "es6",
-    "ignoreDeprecations": "6.0",
+    "target": "es5",
+    "ignoreDeprecations": "5.0",
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "dist",
+    "lib": [
+      "es6",
+      "dom"
+    ],
     "typeRoots": [
       "node_modules/@types"
     ]
