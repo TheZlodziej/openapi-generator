@@ -655,7 +655,7 @@ java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar generat
 
 Example:
 ```
-java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar generate -g spring -i modules/openapi-generator/src/test/resources/3_0/oneOf_issue_23527.yaml -o /tmp/java-spring/ --openapi-normalizer REPLACE_ONE_OF_BY_DISCRIMINATOR_MAPPING=true
+java -jar modules/openapi-generator-cli/target/openapi-generator-cli.jar generate -g java -i modules/openapi-generator/src/test/resources/3_0/oneOf_issue_23527.yaml -o /tmp/java/ --openapi-normalizer REPLACE_ONE_OF_BY_DISCRIMINATOR_MAPPING=true
 ```
 
 Here is what the change in the spec looks like:
