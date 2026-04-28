@@ -3,7 +3,7 @@
     "declaration": true,
     "target": "{{#supportsES6}}es6{{/supportsES6}}{{^supportsES6}}es5{{/supportsES6}}",
     {{#ignoreDeprecations}}
-    "ignoreDeprecations": "{{#supportsES6}}6.0{{/supportsES6}}{{^supportsES6}}5.0{{/supportsES6}}",
+    "ignoreDeprecations": "{{{.}}}",
     {{/ignoreDeprecations}}
 {{#sagasAndRecords}}
     "strict": true,
